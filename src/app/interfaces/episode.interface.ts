@@ -8,12 +8,12 @@ export interface Episode {
   created: string; // Time at which the episode was created in the database.
 }
 
-export interface CharactersHttp {
+export interface EpisodesHttp {
   info: {
     count: number;
     pages: number;
     next: string;
     prev: string | null;
   },
-  results: Location[]
+  results: Episode[]
 }

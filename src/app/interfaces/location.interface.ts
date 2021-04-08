@@ -8,7 +8,7 @@ export interface Location {
   created: string; // Time at which the location was created in the database.
 }
 
-export interface CharactersHttp {
+export interface LocationsHttp {
   info: {
     count: number;
     pages: number;
