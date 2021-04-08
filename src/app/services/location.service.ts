@@ -8,7 +8,7 @@ import { Location, LocationsHttp } from '../interfaces/location.interface';
 })
 export class LocationService {
 
-  private APIURL: string = 'https://rickandmortyapi.com/api/character';
+  private APIURL: string = 'https://rickandmortyapi.com/api/location';
 
   constructor(
     private httpClient: HttpClient,
