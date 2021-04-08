@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div id="characters" class="row">
     <div class="col">
       <h2>Characters</h2>
       <p>
@@ -8,6 +8,18 @@
         Count: <strong *ngIf="charactersData.count">{{ charactersData.count }}</strong>
         <br>
         The execution Time: <strong *ngIf="charactersData.time">{{ charactersData.time }}</strong> seconds.
+      </p>
+    </div>
+  </div>
+  <div id="locations" class="row">
+    <div class="col">
+      <h2>Locations</h2>
+      <p>
+        The letter "L" (case insensitive) is repeated in the names of the characters
+        <br>
+        Count: <strong *ngIf="locationsData.count">{{ locationsData.count }}</strong>
+        <br>
+        The execution Time: <strong *ngIf="locationsData.time">{{ locationsData.time }}</strong> seconds.
       </p>
     </div>
   </div>

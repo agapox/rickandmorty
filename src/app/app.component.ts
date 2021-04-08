@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Character, CharactersHttp } from './interfaces/character.interface';
 import { Episode, EpisodesHttp } from './interfaces/episode.interface';
 import { Location, LocationsHttp } from './interfaces/location.interface';
 import { CharacterService } from './services/character.service';
+import { LocationService } from './services/location.service';
 
 interface Count {
   count: number;
@@ -26,15 +28,26 @@ export class AppComponent implements OnInit {
     count: 0,
     time: 0,
     pages: 0
-  }
+  };
+
+  // LOCATIONS
+  locations: Location[] = [];
+  locationsData: Count = {
+    count: 0,
+    time: 0,
+    pages: 0
+  };
 
   constructor(
-    private characterService: CharacterService
+    private characterService: CharacterService,
+    private locationService: LocationService,
+    // private episodeService: episodeService,
   ) {}
 
   ngOnInit() {
     this.initTimer = performance.now();
     this.getCharacterPages();
+    this.getLocationPages();
 
   }
 
@@ -55,15 +68,13 @@ export class AppComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        if (i === pages) {
-          this.calcCountAndTime(this.charactersData)
-        }
+        i === pages && this.calcCountAndTime(this.charactersData, 'c');
       });
     }
   }
 
-  calcCountAndTime(data: Count) {
-    data.count = this.countLetters(this.characters, 'c');
+  calcCountAndTime(data: Count, letter: string) {
+    data.count = this.countLetters(this.characters, letter.toLocaleLowerCase());
     data.time = (performance.now() - this.initTimer)/1000;
   }
 
@@ -75,5 +86,27 @@ export class AppComponent implements OnInit {
       });
     });
     return count;
+  }
+
+  getLocationPages() {
+    this.locationService.getLocations().subscribe((data: LocationsHttp) => {
+      this.locationsData.pages = data.info.pages;
+    },
+    (err) => console.log(err),
+    () => {
+      this.getAllLocations(this.locationsData.pages);
+    });
+  }
+
+  getAllLocations(pages: number) {
+    for (let i = 1; i <= pages; i++) {
+      this.locationService.getLocations(i).subscribe((data: LocationsHttp) => {
+        this.locations.push(...data.results)
+      },
+      (err) => console.error(err),
+      () => {
+        i === pages && this.calcCountAndTime(this.locationsData, 'l');
+      });
+    }
   }
 }
