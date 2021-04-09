@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { Character, CharactersHttp } from './interfaces/character.interface';
 import { Episode, EpisodesHttp } from './interfaces/episode.interface';
 import { Location, LocationsHttp } from './interfaces/location.interface';
 import { CharacterService } from './services/character.service';
 import { LocationService } from './services/location.service';
+import { EpisodeService } from './services/episode.service';
 
 interface Count {
   count: number;
   time: number;
   pages: number;
+  letter: string;
 }
 
 @Component({
@@ -18,16 +19,21 @@ interface Count {
   styleUrls: ['./app.component.scss'],
   providers: [CharacterService]
 })
-export class AppComponent implements OnInit {
-  title = 'rickandmorty';
+export class AppComponent implements OnInit, AfterContentChecked{
+  title = 'Rick and Morty';
 
   initTimer: number = 0;
+  finalTimer: number = 0;
+  fase1Timer: number = 0;
+  fase2Timer: number = 0;
+
   // CHARACTERS
   characters: Character[] = [];
   charactersData: Count = {
     count: 0,
     time: 0,
-    pages: 0
+    pages: 0,
+    letter: 'c'
   };
 
   // LOCATIONS
@@ -35,21 +41,42 @@ export class AppComponent implements OnInit {
   locationsData: Count = {
     count: 0,
     time: 0,
-    pages: 0
+    pages: 0,
+    letter: 'l'
   };
+
+  // LOCATIONS
+  episodes: Episode[] = [];
+  episodesData: Count = {
+    count: 0,
+    time: 0,
+    pages: 0,
+    letter: 'e'
+  };
+  epiLocation: {
+    id: number,
+    name: string,
+    location: string[]
+  }[] = []
 
   constructor(
     private characterService: CharacterService,
     private locationService: LocationService,
-    // private episodeService: episodeService,
+    private episodeService: EpisodeService,
   ) {}
 
   ngOnInit() {
     this.initTimer = performance.now();
     this.getCharacterPages();
     this.getLocationPages();
-
+    this.getEpisodePages();
   }
+
+  ngAfterContentChecked() {
+    this.fase1Timer = performance.now() - this.initTimer;
+  }
+
+
 
   getCharacterPages() {
     this.characterService.getCharacters().subscribe((data: CharactersHttp) => {
@@ -68,14 +95,14 @@ export class AppComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        i === pages && this.calcCountAndTime(this.charactersData, 'c');
+        i === pages && this.calcCountAndTime(this.charactersData);
       });
     }
   }
 
-  calcCountAndTime(data: Count, letter: string) {
-    data.count = this.countLetters(this.characters, letter.toLocaleLowerCase());
-    data.time = (performance.now() - this.initTimer)/1000;
+  calcCountAndTime(data: Count) {
+    data.count = this.countLetters(this.characters, data.letter.toLocaleLowerCase());
+    data.time = (performance.now() - this.initTimer);
   }
 
   countLetters(arr: (Character[] | Location[] | Episode[]), letter: string) {
@@ -105,8 +132,53 @@ export class AppComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        i === pages && this.calcCountAndTime(this.locationsData, 'l');
+        i === pages && this.calcCountAndTime(this.locationsData);
       });
     }
+  }
+
+  getEpisodePages() {
+    this.episodeService.getEpisodes().subscribe((data: EpisodesHttp) => {
+      this.episodesData.pages = data.info.pages;
+    },
+    (err) => console.log(err),
+    () => {
+      this.getAllEpisodes(this.episodesData.pages);
+    });
+  }
+
+  getAllEpisodes(pages: number) {
+    for (let i = 1; i <= pages; i++) {
+      this.episodeService.getEpisodes(i).subscribe((data: EpisodesHttp) => {
+        this.episodes.push(...data.results)
+      },
+      (err) => console.error(err),
+      () => {
+        i === pages && this.calcCountAndTime(this.episodesData);
+        i === pages && this.getEpisodesCharacterLocationsWorld(this.episodes);
+      });
+    }
+  }
+
+  getEpisodesCharacterLocationsWorld(episodes: Episode[]) {
+    let epiLocWo: {
+      id: number,
+      name: string,
+      location: string[]
+    }[] = []
+    episodes.forEach(({id, name, characters}: Episode, i) => {
+      let charLocationWorld: string[] = [];
+      characters.forEach((el: string) => {
+        const char = this.characters[Number(el.split('https://rickandmortyapi.com/api/character/')[1])];
+        char?.location && charLocationWorld.push(char.location.name);
+        char?.origin && charLocationWorld.push(char.origin.name);
+      })
+      epiLocWo.push({
+        id,
+        name,
+        location: [...new Set(charLocationWorld)]
+      });
+    })
+    this.epiLocation = epiLocWo
   }
 }

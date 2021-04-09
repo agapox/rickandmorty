@@ -1,25 +1,92 @@
 <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>{{ title }}</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Challenge Fase # 2</h2>
+      <p>
+        Total execution of Fase # 2
+        <br>
+        Execution Time: <strong *ngIf="charactersData.time">{{ fase1Timer | date: 'SSS' }}</strong> milliseconds.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>{{ episodes.length }} Episodes</h3>
+      <ul>
+        <li *ngFor="let episode of epiLocation; let i = index">
+          <h5>Episode # {{ episode.id }} - {{ episode.name }}</h5>
+          <p
+            *ngFor="let loc of episode.location">
+            {{loc}}
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Challenge Fase # 1</h2>
+      <p>
+        Total execution of Fase # 1
+        <br>
+        Execution Time: <strong *ngIf="charactersData.time">{{ fase1Timer | date: 'SSS' }}</strong> milliseconds.
+      </p>
+    </div>
+  </div>
   <div id="characters" class="row">
     <div class="col">
-      <h2>Characters</h2>
+      <h4>Characters</h4>
       <p>
-        The letter "C" (case insensitive) is repeated in the names of the characters
+        The letter "{{ charactersData.letter }}" (case insensitive) is repeated in the names of the characters
         <br>
         Count: <strong *ngIf="charactersData.count">{{ charactersData.count }}</strong>
         <br>
-        The execution Time: <strong *ngIf="charactersData.time">{{ charactersData.time }}</strong> seconds.
+        Real Count: <strong>394</strong>
+        <br>
+        Execution Time: <strong *ngIf="charactersData.time">{{ charactersData.time | date: 'SSS' }}</strong> milliseconds.
       </p>
     </div>
   </div>
   <div id="locations" class="row">
     <div class="col">
-      <h2>Locations</h2>
+      <h4>Locations</h4>
       <p>
-        The letter "L" (case insensitive) is repeated in the names of the characters
+        The letter "{{ locationsData.letter }}" (case insensitive) is repeated in the names of the locations
         <br>
         Count: <strong *ngIf="locationsData.count">{{ locationsData.count }}</strong>
         <br>
-        The execution Time: <strong *ngIf="locationsData.time">{{ locationsData.time }}</strong> seconds.
+        Real Count: <strong>405</strong>
+        <br>
+        Execution Time: <strong *ngIf="locationsData.time">{{ locationsData.time | date: 'SSS' }}</strong> milliseconds.
+      </p>
+    </div>
+  </div>
+  <div id="episodes" class="row">
+    <div class="col">
+      <h4>Episodes</h4>
+      <p>
+        The letter "{{ episodesData.letter }}" (case insensitive) is repeated in the names of the episodes
+        <br>
+        Count: <strong *ngIf="episodesData.count">{{ episodesData.count }}</strong>
+        <br>
+        Real Count: <strong>780</strong>
+        <br>
+        Execution Time: <strong *ngIf="episodesData.time">{{ episodesData.time | date: 'SSS' }}</strong> milliseconds.
       </p>
     </div>
   </div>
