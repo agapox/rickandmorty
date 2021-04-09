@@ -19,7 +19,7 @@ interface Count {
   styleUrls: ['./app.component.scss'],
   providers: [CharacterService]
 })
-export class AppComponent implements OnInit, AfterContentChecked{
+export class AppComponent implements OnInit {
   title = 'Rick and Morty';
 
   initTimer: number = 0;
@@ -71,12 +71,6 @@ export class AppComponent implements OnInit, AfterContentChecked{
     this.getLocationPages();
     this.getEpisodePages();
   }
-
-  ngAfterContentChecked() {
-    this.fase1Timer = performance.now() - this.initTimer;
-  }
-
-
 
   getCharacterPages() {
     this.characterService.getCharacters().subscribe((data: CharactersHttp) => {
@@ -155,12 +149,13 @@ export class AppComponent implements OnInit, AfterContentChecked{
       (err) => console.error(err),
       () => {
         i === pages && this.calcCountAndTime(this.episodesData);
-        i === pages && this.getEpisodesCharacterLocationsWorld(this.episodes);
+        this.fase1Timer = performance.now() - this.initTimer;
+        i === pages && this.getEpisodesCharacterLocationsOrigin(this.episodes);
       });
     }
   }
 
-  getEpisodesCharacterLocationsWorld(episodes: Episode[]) {
+  getEpisodesCharacterLocationsOrigin(episodes: Episode[]) {
     let epiLocWo: {
       id: number,
       name: string,
@@ -180,5 +175,8 @@ export class AppComponent implements OnInit, AfterContentChecked{
       });
     })
     this.epiLocation = epiLocWo
+    const t1 = performance.now()
+    this.fase2Timer = t1 - this.initTimer;
+    console.log(t1)
   }
 }
