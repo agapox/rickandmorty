@@ -14,8 +14,7 @@ export class CharacterService {
     private httpClient: HttpClient,
   ) { }
 
-  getCharacters(page?: number): Observable<CharactersHttp> {
-    page = page ? page : 1;
+  getCharacters(page: number): Observable<CharactersHttp> {
     return this.httpClient.get<CharactersHttp>(`${this.APIURL}/?page=${page}`);
   }
 

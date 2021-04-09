@@ -14,8 +14,7 @@ export class EpisodeService {
     private httpClient: HttpClient,
   ) { }
 
-  getEpisodes(page?: number): Observable<EpisodesHttp> {
-    page = page ? page : 1;
+  getEpisodes(page: number): Observable<EpisodesHttp> {
     return this.httpClient.get<EpisodesHttp>(`${this.APIURL}/?page=${page}`);
   }
 

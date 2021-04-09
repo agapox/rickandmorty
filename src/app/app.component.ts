@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
   }
 
   getCharacterPages() {
-    this.characterService.getCharacters().subscribe((data: CharactersHttp) => {
+    this.characterService.getCharacters(1).subscribe((data: CharactersHttp) => {
       this.charactersData.pages = data.info.pages;
     },
     (err) => console.error(err),
@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
   }
 
   getLocationPages() {
-    this.locationService.getLocations().subscribe((data: LocationsHttp) => {
+    this.locationService.getLocations(1).subscribe((data: LocationsHttp) => {
       this.locationsData.pages = data.info.pages;
     },
     (err) => console.log(err),
@@ -136,10 +136,10 @@ export class AppComponent implements OnInit {
   }
 
   getEpisodePages() {
-    this.episodeService.getEpisodes().subscribe((data: EpisodesHttp) => {
+    this.episodeService.getEpisodes(1).subscribe((data: EpisodesHttp) => {
       this.episodesData.pages = data.info.pages;
     },
-    (err) => console.log(err),
+    (err) => console.error(err),
     () => {
       this.getAllEpisodes(this.episodesData.pages);
     });

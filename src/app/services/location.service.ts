@@ -14,8 +14,7 @@ export class LocationService {
     private httpClient: HttpClient,
   ) { }
 
-  getLocations(page?: number): Observable<LocationsHttp> {
-    page = page ? page : 1;
+  getLocations(page: number): Observable<LocationsHttp> {
     return this.httpClient.get<LocationsHttp>(`${this.APIURL}/?page=${page}`);
   }
 
