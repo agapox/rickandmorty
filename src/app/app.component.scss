@@ -74,11 +74,11 @@ $color_card_shadow: #29075a;
 
         &:hover {
           @include cards-styles-hover();
-          h5, h6 {
+          h5, p {
             color: lighten($color_title,20%);
           }
         }
-        h5, h6 {
+        h5, p {
           color: $color_title;
         }
       }
