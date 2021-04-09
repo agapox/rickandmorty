@@ -80,10 +80,11 @@
     </div>
     <div class="row">
       <div class="col">
-        <h3 class="mb-4">{{ episodes.length }} Episodes - Characters origin and locations:</h3>
+        <h3 class="mb-4">{{ episodes.length }} Episodes</h3>
         <ul class="episodes__task__list">
           <li *ngFor="let episode of epiLocation; let i = index">
             <h5>Episode # {{ episode.id }} - {{ episode.name }}</h5>
+            <p>Characters origins and locations:</p>
             <div class="locations">
               <div class="location" *ngFor="let loc of episode.location">
                 {{loc}}

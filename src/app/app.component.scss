@@ -45,6 +45,7 @@ $color_card_shadow: #29075a;
     &__item {
       > div {
         @include cards-styles();
+        margin-bottom: 2rem;
 
         &:hover {
           @include cards-styles-hover();
@@ -73,11 +74,11 @@ $color_card_shadow: #29075a;
 
         &:hover {
           @include cards-styles-hover();
-          h5 {
+          h5, h6 {
             color: lighten($color_title,20%);
           }
         }
-        h5 {
+        h5, h6 {
           color: $color_title;
         }
       }
@@ -86,6 +87,14 @@ $color_card_shadow: #29075a;
     .locations {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+
+      @media (max-width: 991.98px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 767.98px) {
+        grid-template-columns: 1fr;
+      }
 
       .location {
 
