@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Character, CharactersHttp } from './interfaces/character.interface';
 import { Episode, EpisodesHttp } from './interfaces/episode.interface';
 import { Location, LocationsHttp } from './interfaces/location.interface';
@@ -17,7 +17,11 @@ interface Count {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [CharacterService]
+  providers: [
+    CharacterService,
+    LocationService,
+    EpisodeService
+  ]
 })
 export class AppComponent implements OnInit {
   title = 'Rick and Morty';
