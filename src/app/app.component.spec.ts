@@ -1,6 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable, of, throwError } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { GetCharacterHttpResMock, GetCharactersHttpResMock } from 'src/assets/mocks/character.mock';
 import { AppComponent } from './app.component';
 import { CharacterService } from './services/character.service';
 import { EpisodeService } from './services/episode.service';
@@ -53,6 +56,21 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.main-title').textContent).toContain(fixture.componentInstance.title);
+  });
+
+  it('should call characterService.getCharacters and save pages', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    spyOn(characterService, 'getCharacters').and.callFake((page) => {
+      return of(GetCharactersHttpResMock)
+    });
+    let pages = 0;
+    characterService.getCharacters(1).subscribe(data => {
+      pages = data.info.pages;
+    })
+    app.ngOnInit();
+    expect(pages).toEqual(34);
+    expect(app.getCharacterPages).toBeTruthy()
   });
 
 });
