@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   charactersOnView: Character[] = [];
   numberDisplayed: number = 10;
   hideButton = false;
+  loadedLocalStorageChar = false;
 
   constructor() { }
 
@@ -37,8 +38,12 @@ export class HomeComponent implements OnInit {
   }
 
   getData() {
-    this.characters = JSON.parse(localStorage.characters);
-    this.resetCharactersList(this.numberDisplayed);
+    if (localStorage.characters !== '') {
+      this.characters = JSON.parse(localStorage.characters)
+        .sort((a: Character, b: Character) => a.id > b.id ? 1 : -1);
+      this.resetCharactersList(this.numberDisplayed);
+      this.loadedLocalStorageChar = true;
+    }
   }
 
   showMoreCharacters() {

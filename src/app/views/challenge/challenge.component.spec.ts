@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { ChallengeComponent } from './challenge.component';
 
@@ -51,17 +51,11 @@ describe('ChallengeComponent', () => {
     expect(episodeService).toBeTruthy();
   });
 
-  xit(`should have as title 'Rick and Morty'`, () => {
-    const fixture = TestBed.createComponent(ChallengeComponent);
-    const challengeComponent = fixture.componentInstance;
-    expect(challengeComponent.title).toEqual('Rick and Morty');
-  });
-
-  xit('should render title', () => {
+  it('should have title "Challenges"', () => {
     const fixture = TestBed.createComponent(ChallengeComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.main-title').textContent).toContain(fixture.componentInstance.title);
+    expect(compiled.querySelector('.main-title').textContent).toContain('Challenges');
   });
 
   it('should call characterService.getCharacters and save pages', () => {
