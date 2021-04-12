@@ -12,16 +12,6 @@
 - For each `episode`, indicate the quantity and a list with the` location` (`origin`) of all the` characters` that appeared in that `episode` (without repeating)
 - How long the program took 👆 in total
 
-## Challenge Performance Results
-
-#### Page Challenges
-![N|Solid](/assets/images/perfomance-test-challenges-01.jpg)
-![N|Solid](/assets/images/perfomance-test-challenges-02.jpg)
-![N|Solid](/assets/images/perfomance-test-challenges-03.jpg)
-
-#### Page Characters
-![N|Solid](/assets/images/perfomance-test-characters.jpg)
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
 ## Development server
