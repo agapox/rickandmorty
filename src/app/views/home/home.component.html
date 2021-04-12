@@ -1,0 +1,55 @@
+<main id="home">
+  <section class="characters mt-4 mb-5">
+    <div class="container mb-4">
+      <div class="row">
+        <div class="col-6">
+          <h1>Character List</h1>
+        </div>
+        <div class="col-6">
+          <div class="float-end" >
+            <label class="me-3" for="">Display</label>
+            <select name="" id="" (change)="onSelectShow($event)">
+              <option [value]="4">4</option>
+              <option selected [value]="10">10</option>
+              <option [value]="20">20</option>
+              <option [value]="50">50</option>
+              <option [value]="100">100</option>
+              <option [value]="660">660</option>
+              <option [value]="characters.length">all</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <article class="col-xs-12 col-md-6 col-lg-4 col-xl-3 mb-4" *ngFor="let char of charactersOnView">
+          <app-card-character
+            [character]="char">
+          </app-card-character>
+        </article>
+
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mb-4">Showing
+            <span *ngIf="hideButton">all {{ characters.length }}</span>
+            <span *ngIf="!hideButton">
+              {{ charactersOnView.length }}
+              of {{ characters.length}}
+            </span>
+            characters
+          </h5>
+          <div class="d-grid gap-2 d-md-block">
+            <button
+              *ngIf="!hideButton"
+              class="btn btn-primary btn-lg"
+              (click)="showMoreCharacters()">
+              Show {{numberDisplayed}} more characters
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

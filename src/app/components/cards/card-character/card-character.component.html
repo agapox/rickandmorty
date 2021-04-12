@@ -1,0 +1,20 @@
+<div class="card" [ngClass]="'character-' + character.id.toString()">
+  <div class="card-img-container">
+    <img [src]="character.image" class="card-img-top" [alt]="character.name">
+    <app-badge [status]="character.status"></app-badge>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ character.name }}</h5>
+    <div>
+      <div>
+        <p class="card-text">Species: <strong>{{ character.species }}</strong></p>
+        <p>Type: <strong>{{ character.type }}</strong></p>
+        <p>Gender: <strong>{{ character.gender }}</strong></p>
+      </div>
+    </div>
+    <div>
+      <p>First seen in: <span>{{ character.origin.name }}</span></p>
+      <p>Last seen in: <span>{{ character.location.name }}</span></p>
+    </div>
+  </div>
+</div>

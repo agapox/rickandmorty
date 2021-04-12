@@ -1,0 +1,33 @@
+@import '../../../../assets/styles/';
+
+:host {
+  display: flex;
+  height: 100%;
+  .card {
+    @include cards-styles();
+    padding: 0;
+    width: 95%;
+    max-width: 400px;
+    margin: 0 auto 0 auto;
+
+    .card-img-container {
+      position: relative;
+      app-badge {
+        position: absolute;
+        z-index: 999;
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+    &-title {
+      color: $color_title;
+    }
+
+    &:hover {
+      @include cards-styles-hover();
+      .card-title {
+        color: $color_RM2;
+      }
+    }
+  }
+}

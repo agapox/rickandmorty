@@ -1,0 +1,35 @@
+:host {
+  display: inline-flex;
+
+  span {
+    text-transform: capitalize;
+    color: #dedede;
+    background-color: #525252;
+    border: 2px solid;
+    border-color: #dedede;
+    border-radius: 100px;
+    padding: 2px 16px 4px 16px;;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+
+    &.alive {
+      color: #9eff9e;
+      background-color: #386e38;
+      border-color: #9eff9e;
+    }
+    &.dead {
+      color: #ffa0a0;
+      background-color: #4b0000;
+      border-color: #ffa0a0;
+    }
+    &.unknown {
+      color: #ffe4d2;
+      background-color: #e0af00;
+      border-color: #ffe4d2;
+    }
+  }
+
+}

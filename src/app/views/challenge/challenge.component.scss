@@ -1,0 +1,65 @@
+@import '../../../assets/styles/';
+
+.episodes {
+
+  .fase1 {
+    &__item {
+      > div {
+        @include cards-styles();
+        margin-bottom: 2rem;
+
+        &:hover {
+          @include cards-styles-hover();
+          h4 {
+            color: $color_RM2;
+          }
+        }
+        h4 {
+          color: $color_title;
+          transition: all .187s ease-out;
+        }
+      }
+    }
+  }
+
+  &__task {
+
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        @include cards-styles();
+        margin-bottom: 2rem;
+
+        &:hover {
+          @include cards-styles-hover();
+          h5, p {
+            color: $color_RM2;
+          }
+        }
+        h5, p {
+          color: $color_title;
+        }
+      }
+    }
+
+    .locations {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      @media (max-width: 991.98px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 767.98px) {
+        grid-template-columns: 1fr;
+      }
+
+      .location {
+
+      }
+    }
+  }
+}
