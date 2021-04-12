@@ -1,0 +1,32 @@
+@mixin bg-gradient($color1, $color2) {
+  background: $color1;
+  background: -webkit-linear-gradient(top left, $color1, $color2);
+  background: -moz-linear-gradient(top left, $color1, $color2);
+  background: linear-gradient(to bottom right, $color1, $color2);
+}
+
+@mixin cards-shadow($box_shadow_val: 0px 4px 16px -4px rgba(0,0,0,0.4)) {
+  -webkit-box-shadow: $box_shadow_val;
+  -moz-box-shadow: $box_shadow_val;
+  box-shadow: $box_shadow_val;
+  transition: all .187s ease-out;
+}
+
+@mixin cards-styles {
+  $color2: #100224;
+  color: $color_card_text;
+  border: $border_width solid $color_card_text;
+  padding: 1rem;
+  border-radius: 16px;
+  background-color: $color_card_bg;
+  overflow: hidden;
+  @include cards-shadow(0px 4px 16px -4px rgba($color_card_shadow,0.6));
+}
+
+@mixin cards-styles-hover {
+  background-color: lighten($color_card_bg, 1%);
+  $color: #791cff;
+  @include cards-shadow(0px 4px 16px 2px rgba($color,0.2));
+  border-color: $color;
+  color: lighten($color_card_text, 30%);
+}
