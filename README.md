@@ -1,7 +1,7 @@
 # Rick and Morty
 #### Single page aplication created with Angular
 
-![Rick and Morty](https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png)
+[Rick and Morty](https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png)
 
 ## Challenges for this app:
 ### Fase 1:
