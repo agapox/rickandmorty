@@ -29,5 +29,10 @@
         color: $color_RM2;
       }
     }
+    &-body {
+      p {
+        margin-bottom: 4px;
+      }
+    }
   }
 }
