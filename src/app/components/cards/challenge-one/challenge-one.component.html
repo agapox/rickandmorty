@@ -1,9 +1,0 @@
-<div class="card" *ngIf="challenge">
-  <h4>{{ challenge.name }}</h4>
-  <p>
-    The letter "{{ challenge.letter }}" (case insensitive) is repeated <strong *ngIf="challenge.count">{{ challenge.count }}</strong> times.
-    <br>
-    <br>
-    Execution Time: <strong *ngIf="challenge.time">{{ challenge.time | date: 'SSS' }}</strong> milliseconds.
-  </p>
-</div>
