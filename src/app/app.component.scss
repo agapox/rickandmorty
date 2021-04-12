@@ -1,104 +1,13 @@
-$border_width: 1px;
-$color_title: #4696bf;
-$color_card_text: #7352a0;
-$color_card_bg: #100224;
-$color_card_shadow: #29075a;
+@import '../assets/styles/';
 
-@mixin cards-shadow($box_shadow_val: 0px 4px 16px -4px rgba(0,0,0,0.4)) {
-  -webkit-box-shadow: $box_shadow_val;
-  -moz-box-shadow: $box_shadow_val;
-  box-shadow: $box_shadow_val;
-  transition: all .187s ease-out;
-}
-
-@mixin cards-styles {
-  $color2: #100224;
-  color: $color_card_text;
-  border: $border_width solid $color_card_text;
-  padding: 1rem;
-  border-radius: 16px;
-  background-color: $color_card_bg;
-  overflow: hidden;
-  @include cards-shadow(0px 4px 16px -4px rgba($color_card_shadow,0.6));
-}
-
-@mixin cards-styles-hover {
-  background-color: lighten($color_card_bg, 1%);
-  $color: #791cff;
-  @include cards-shadow(0px 4px 16px 2px rgba($color,0.2));
-  border-color: $color;
-  color: lighten($color_card_text, 30%);
-}
-
-
-
-.episodes {
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   color: #ffffff;
-  $page_bg1: #12011a;
-  $page_bg2: #120335;
-  background: $page_bg1;
-  background: -webkit-linear-gradient(top left, $page_bg1, $page_bg2);
-  background: -moz-linear-gradient(top left, $page_bg1, $page_bg2);
-  background: linear-gradient(to bottom right, $page_bg1, $page_bg2);
+  @include bg-gradient($page_bg1, $page_bg2);
 
-  .fase1 {
-    &__item {
-      > div {
-        @include cards-styles();
-        margin-bottom: 2rem;
-
-        &:hover {
-          @include cards-styles-hover();
-          h4 {
-            color: lighten($color_title,20%);
-          }
-        }
-        h4 {
-          color: $color_title;
-          transition: all .187s ease-out;
-        }
-      }
-    }
-  }
-
-  &__task {
-
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      li {
-        @include cards-styles();
-        margin-bottom: 2rem;
-
-        &:hover {
-          @include cards-styles-hover();
-          h5, p {
-            color: lighten($color_title,20%);
-          }
-        }
-        h5, p {
-          color: $color_title;
-        }
-      }
-    }
-
-    .locations {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      @media (max-width: 991.98px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @media (max-width: 767.98px) {
-        grid-template-columns: 1fr;
-      }
-
-      .location {
-
-      }
-    }
+  #container-wrapper {
+    min-height: calc(100vh - #{$headerHeight + $footerHeight});
   }
 }
