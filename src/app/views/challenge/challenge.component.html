@@ -1,90 +1,82 @@
 <div class="episodes">
 
-  <div class="container mb-2">
+  <div class="container mb-2 mt-2">
     <div class="row">
       <div class="col">
-        <h2 class="pb-2">Challenge Fase # 1</h2>
-        <p>
-          Total execution of Fase # 1
-          <br>
-          Execution Time: <strong *ngIf="fase1Timer">{{ fase1Timer | date: 'SSS' }}</strong> milliseconds.
+        <h1 class="pb-2">Challenges</h1>
+        <p class="lead">
+          This a technical challenge for a job offer using the
+          <strong>
+            <a class="rm-api" href="https://rickandmortyapi.com/" target="_blank">
+              RickandMortyApi
+            </a>
+          </strong>
         </p>
-      </div>
-    </div>
-  </div>
-  <div class="container fase1 mb-5">
-    <div class="row">
-      <div id="characters" class="fase1__item col-sm-12 col-md-6 col-lg-4">
-        <div>
-          <h4>Characters</h4>
-          <p>
-            The letter "{{ charactersData.letter }}" (case insensitive) is repeated in the names of the characters
-            <br>
-            Count: <strong *ngIf="charactersData.count">{{ charactersData.count }}</strong>
-            <br>
-            Real Count: <strong>394</strong>
-            <br>
-            Execution Time: <strong *ngIf="charactersData.time">{{ charactersData.time | date: 'SSS' }}</strong> milliseconds.
-          </p>
-        </div>
-      </div>
-      <div id="locations" class="fase1__item col-sm-12 col-md-6 col-lg-4">
-        <div>
-          <h4>Locations</h4>
-          <p>
-            The letter "{{ locationsData.letter }}" (case insensitive) is repeated in the names of the locations
-            <br>
-            Count: <strong *ngIf="locationsData.count">{{ locationsData.count }}</strong>
-            <br>
-            Real Count: <strong>405</strong>
-            <br>
-            Execution Time: <strong *ngIf="locationsData.time">{{ locationsData.time | date: 'SSS' }}</strong> milliseconds.
-          </p>
-        </div>
-      </div>
-      <div id="episodes" class="fase1__item col-sm-12 col-md-6 col-lg-4">
-        <div>
-          <h4>Episodes</h4>
-          <p>
-            The letter "{{ episodesData.letter }}" (case insensitive) is repeated in the names of the episodes
-            <br>
-            Count: <strong *ngIf="episodesData.count">{{ episodesData.count }}</strong>
-            <br>
-            Real Count: <strong>780</strong>
-            <br>
-            Execution Time: <strong *ngIf="episodesData.time">{{ episodesData.time | date: 'SSS' }}</strong> milliseconds.
-          </p>
-        </div>
       </div>
     </div>
   </div>
 
-  <div class="container episodes__task">
-    <div class="row">
-      <div class="col">
-        <h2 class="pb-2">Challenge Fase # 2</h2>
-        <p>
-          Total execution of Fase # 2
-          <br>
-          Execution Time: <strong *ngIf="fase2Timer">{{ fase2Timer | date: 'SSS' }}</strong> milliseconds.
-        </p>
+  <section class="challenge-1 challenge">
+    <div class="container mb-2">
+      <div class="row">
+        <div class="col">
+          <h2 class="pb-2">Challenge # 1</h2>
+          <h6>Char counter:</h6>
+          <ul>
+            <li><p>How many times does the letter <strong>"l"</strong> (case insensitive) appear in the names of all the <strong>locations</strong></p></li>
+            <li><p>how many times does the letter <strong>"e"</strong> (case insensitive) appear in the names of all the <strong>episodes</strong></p></li>
+            <li><p>How many times does the letter <strong>"c"</strong> (case insensitive) appear in the names of all the <strong>characters</strong></p></li>
+            <li><p>how long the program took 👆 in total</p></li>
+          </ul>
+          <p>
+            Total execution of Fase # 1
+            <br>
+            Execution Time: <strong *ngIf="fase1Timer">{{ fase1Timer | date: 'SSS' }}</strong> milliseconds.
+          </p>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <h3 class="mb-4">{{ episodes.length }} Episodes</h3>
-        <ul class="episodes__task__list">
-          <li *ngFor="let episode of epiLocation; let i = index">
-            <h5>Episode # {{ episode.id }} - {{ episode.name }}</h5>
-            <p>Characters origins and locations:</p>
-            <div class="locations">
-              <div class="location" *ngFor="let loc of episode.location">
-                {{loc}}
-              </div>
-            </div>
-          </li>
-        </ul>
+    <div class="container fase1 mb-5">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let challenge of challengesData">
+          <app-challenge-one *ngIf="challenge" [challenge]="challenge"></app-challenge-one>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="challenge-1 challenge">
+    <div class="container episodes__task">
+      <div class="row">
+        <div class="col">
+          <h2 class="pb-2">Challenge # 2</h2>
+          <h6>Episode locations:</h6>
+          <ul>
+            <li><p>
+              For each <strong>episode</strong>, indicate the quantity and a list with the
+              <strong>location</strong> (<strong>origin</strong>) of all the
+              <strong>characters</strong> that appeared in that <strong>episode</strong>
+              (without repeating)
+            </p></li>
+            <li><p>how long the program took 👆 in total</p></li>
+          </ul>
+          <p>
+            Total execution of Fase # 2
+            <br>
+            Execution Time: <strong *ngIf="fase2Timer">{{ fase2Timer | date: 'SSS' }}</strong> milliseconds.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3 class="mb-4">{{ episodes.length }} Episodes</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12" *ngFor="let episode of epiLocation; let i = index">
+          <app-challenge-two [episode]="episode"></app-challenge-two>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

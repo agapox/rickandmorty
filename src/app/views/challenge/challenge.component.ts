@@ -32,6 +32,13 @@ export class ChallengeComponent implements OnInit {
   fase1Timer: number = 0;
   fase2Timer: number = 0;
 
+  challengesData: {
+    name: string;
+    count: number;
+    time: number;
+    letter: string;
+  }[] = [];
+
   // CHARACTERS
   characters: Character[] = [];
   charactersData: Count = {
@@ -77,6 +84,11 @@ export class ChallengeComponent implements OnInit {
     this.getEpisodePages();
   }
 
+  getChallengesData(name: string, dataChal: Count) {
+    const { count, time, letter } = dataChal
+    this.challengesData.push({ name, count, time, letter })
+  }
+
   getCharacterPages() {
     this.characterService.getCharacters(1).subscribe((data: CharactersHttp) => {
       this.charactersData.pages = data.info.pages;
@@ -94,8 +106,11 @@ export class ChallengeComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        i === pages && this.calcCountAndTime(this.charactersData);
-        i === pages && this.saveCharactersLocalStorage(this.characters);
+        if (i === pages ) {
+          this.calcCountAndTime(this.charactersData);
+          this.saveCharactersLocalStorage(this.characters);
+          this.getChallengesData('Characters', this.charactersData);
+        }
       });
     }
   }
@@ -138,8 +153,11 @@ export class ChallengeComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        i === pages && this.calcCountAndTime(this.locationsData);
-        i === pages && this.saveLocationsLocalStorage(this.locations);
+        if (i === pages) {
+          this.calcCountAndTime(this.locationsData);
+          this.saveLocationsLocalStorage(this.locations);
+          this.getChallengesData('Locations', this.locationsData);
+        }
       });
     }
   }
@@ -167,10 +185,13 @@ export class ChallengeComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        i === pages && this.calcCountAndTime(this.episodesData);
-        this.fase1Timer = performance.now() - this.initTimer;
-        i === pages && this.saveEpisodesLocalStorage(this.episodes);
-        i === pages && this.getEpisodesCharacterLocationsOrigin(this.episodes);
+        if (i === pages) {
+          this.calcCountAndTime(this.episodesData);
+          this.fase1Timer = performance.now() - this.initTimer;
+          this.saveEpisodesLocalStorage(this.episodes);
+          this.getEpisodesCharacterLocationsOrigin(this.episodes);
+          this.getChallengesData('Episodes', this.episodesData);
+        }
       });
     }
   }

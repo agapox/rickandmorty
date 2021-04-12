@@ -5,12 +5,16 @@ import { FooterComponent } from './footer/footer.component';
 import { CardCharacterComponent } from './cards/card-character/card-character.component';
 import { BadgeComponent } from './badge/badge.component';
 import { RouterModule } from '@angular/router';
+import { ChallengeOneComponent } from './cards/challenge-one/challenge-one.component';
+import { ChallengeTwoComponent } from './cards/challenge-two/challenge-two.component';
 
 const Components = [
   HeaderComponent,
   FooterComponent,
   CardCharacterComponent,
-  BadgeComponent
+  BadgeComponent,
+  ChallengeOneComponent,
+  ChallengeTwoComponent
 ];
 
 @NgModule({
