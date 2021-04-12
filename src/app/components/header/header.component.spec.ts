@@ -22,4 +22,11 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create toggle mobile menu', () => {
+    const toggle = component.showMenuMobile;
+    component.toggleMobileMenu();
+    expect(component.showMenuMobile).toEqual(!toggle);
+  });
+
 });
