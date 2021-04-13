@@ -58,7 +58,7 @@ describe('HomeComponent', () => {
     expect(component.hideButton).toBeTrue();
   });
 
-  xit('should show qtty of characters selected', () => {
+  it('should show qtty of characters selected', () => {
     let charactersLenght = component.characters.length;
     let charactersOnViewLenght = component.charactersOnView.length;
     if (charactersLenght === charactersOnViewLenght) {
@@ -67,14 +67,15 @@ describe('HomeComponent', () => {
     }
   });
 
-  // it('should show more characters into view', async() => {
-  //   spyOn(component, 'onSelectShow');
-  //   let select =  fixture.debugElement.nativeElement.querySelector('select');
-  //   select.click();
-  //   fixture.whenStable().then(() => {
-  //     expect(component.resetCharactersList).toHaveBeenCalled();
-  //     expect(component.showBtn).toHaveBeenCalled();
-  //   });
-  // });
+  xit('should select display characters', async() => {
+    spyOn(component, 'onSelectShow');
+    let select =  fixture.debugElement.nativeElement.querySelector('select');
+    select.change();
+    fixture.whenStable().then(() => {
+      component.resetCharactersList(20)
+      expect(component.charactersOnView.length).toBe(20);
+      //expect(component.showBtn).toHaveBeenCalled();
+    });
+  });
 
 });
