@@ -6,9 +6,11 @@
   .card {
     @include cards-styles();
     padding: 0;
-    width: 95%;
     max-width: 400px;
     margin: 0 auto 0 auto;
+    @media screen and (max-width: $grid-breakpoints-sm) {
+      width: 95%;
+    }
 
     .card-img-container {
       position: relative;
