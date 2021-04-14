@@ -1,14 +1,29 @@
 <main id="home">
   <section class="characters mt-4 mb-5" *ngIf="loadedLocalStorageChar">
     <div class="container mb-4">
-      <div class="row">
-        <div class="col-6">
+      <div class="row mb-3">
+        <div class="col-12">
           <h1>Character List</h1>
         </div>
-        <div class="col-6">
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <form
+            [formGroup]="searchCharactersForm"
+            (submit)="onSubmit()">
+            <input
+              formControlName="character"
+              (keyup)="onInputChange()"
+              type="text"
+              name=""
+              placeholder="Search name, specie, gender or status"
+              id="search-characters">
+          </form>
+        </div>
+        <div class="col-xs-12 col-sm-6">
           <div class="float-end" >
             <label class="me-3" for="">Display</label>
-            <select name="" id="" (change)="onSelectShow($event)">
+            <select name="" id="" (change)="onSelectCharactersDisplayed($event)">
               <option [value]="4">4</option>
               <option selected [value]="10">10</option>
               <option [value]="20">20</option>
@@ -33,19 +48,28 @@
       <div class="row">
         <div class="col">
           <h5 class="mb-4">Showing
-            <span *ngIf="hideButton">all {{ characters.length }}</span>
+            <span *ngIf="hideButton">all {{ charactersFiltered.length }}</span>
             <span *ngIf="!hideButton">
               {{ charactersOnView.length }}
-              of {{ characters.length}}
+              of {{ charactersFiltered.length}}
             </span>
             characters
+            <span
+              *ngIf="searchCharactersForm.value.character?.length > 0">
+              that matches
+            </span>
+            <span class="search-term">
+              "{{ searchCharactersForm.value.character }}"
+            </span>
           </h5>
           <div class="d-grid gap-2 d-md-block">
             <button
               *ngIf="!hideButton"
               class="btn btn-primary btn-lg"
               (click)="showMoreCharacters()">
-              Show {{numberDisplayed}} more characters
+              Show
+              {{numberDisplayed < charactersFiltered.length - charactersOnView.length ? numberDisplayed : charactersFiltered.length - charactersOnView.length }}
+              more characters
             </button>
           </div>
         </div>

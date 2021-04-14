@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Character } from 'src/app/interfaces/character.interface';
 
 @Component({
@@ -9,28 +10,62 @@ import { Character } from 'src/app/interfaces/character.interface';
 export class HomeComponent implements OnInit {
 
   characters: Character[] = [];
+  charactersFiltered: Character[] = [];
   charactersOnView: Character[] = [];
   numberDisplayed: number = 10;
   hideButton = false;
   loadedLocalStorageChar = false;
+  searchCharactersForm: FormGroup = new FormGroup({});
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.searchCharactersForm.value.character);
     this.getData();
+    this.getForm();
   }
 
-  onSelectShow(data: any) {
-    this.resetCharactersList(data.target.value);
-    this.showBtn(data.target.value)
+  getForm() {
+    this.searchCharactersForm.addControl('character', new FormControl(null));
   }
 
-  showBtn(qtty: number) {
-    if (Number(qtty) === this.characters.length) {
+  onSubmit() {
+    console.log(this.searchCharactersForm.value.character);
+    this.filterCharacters(this.searchCharactersForm.value.character)
+  }
+
+  onInputChange() {
+    this.onSubmit();
+  }
+
+  onSelectCharactersDisplayed(data: any) {
+    this.numberDisplayed = Number(data.target.value);
+    console.log(this.charactersFiltered)
+    this.resetCharactersList2(this.charactersFiltered);
+    this.showBtn()
+  }
+
+  showBtn() {
+    if (this.charactersOnView.length === this.charactersFiltered.length) {
       this.hideButton = true;
     } else {
       this.hideButton = false;
     }
+  }
+
+  filterCharacters(text: string) {
+    this.charactersFiltered = this.characters.filter((char) => {
+      return char.name.toLowerCase().includes(text.toLowerCase()) ||
+        char.gender.toLowerCase().includes(text.toLowerCase()) ||
+        char.status.toLowerCase().includes(text.toLowerCase()) ||
+        char.species.toLowerCase().includes(text.toLowerCase())
+    });
+    this.resetCharactersList2(this.charactersFiltered);
+    this.showBtn();
+  }
+
+  resetCharactersList2(characters: Character[]) {
+    this.charactersOnView = characters.slice(0, this.numberDisplayed);
   }
 
   resetCharactersList(show: number) {
@@ -41,17 +76,18 @@ export class HomeComponent implements OnInit {
     if (localStorage.characters !== '') {
       this.characters = JSON.parse(localStorage.characters)
         .sort((a: Character, b: Character) => a.id > b.id ? 1 : -1);
-      this.resetCharactersList(this.numberDisplayed);
+      this.charactersFiltered = this.characters;
+      this.resetCharactersList2(this.characters);
       this.loadedLocalStorageChar = true;
     }
   }
 
   showMoreCharacters() {
     this.charactersOnView.push(
-      ...this.characters.slice(this.charactersOnView.length, this.charactersOnView.length + this.numberDisplayed)
+      ...this.charactersFiltered.slice(this.charactersOnView.length, this.charactersOnView.length + this.numberDisplayed)
     );
-    if (this.charactersOnView.length === this.characters.length) {
-      this.showBtn(this.charactersOnView.length);
+    if (this.charactersOnView.length === this.charactersFiltered.length) {
+      this.showBtn();
     }
   }
 

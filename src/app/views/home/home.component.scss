@@ -1,0 +1,24 @@
+@import '../../../assets/styles/';
+
+:host {
+  select {
+    border-radius: 4px;
+    padding: 4px;
+  }
+  input {
+    min-width: 350px;
+    border-radius: 4px;
+    padding: 6px;
+    border: 0;
+
+    @media screen and (max-width: $grid-breakpoints-sm) {
+      width: 100%;
+      min-width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .search-term {
+    color: $color_RM2;
+  }
+}
