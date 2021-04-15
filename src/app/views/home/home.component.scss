@@ -3,17 +3,22 @@
 :host {
   select {
     border-radius: 4px;
-    padding: 4px;
+    padding: 8px;
   }
   input {
-    min-width: 350px;
+    max-width: 175px;
+    width: 100%;
     border-radius: 4px;
-    padding: 6px;
+    padding: 8px 16px;
     border: 0;
+    transition: max-width .227s ease-in-out;
+
+    &:focus {
+      max-width: 400px;
+      width: 100%;
+    }
 
     @media screen and (max-width: $grid-breakpoints-sm) {
-      width: 100%;
-      min-width: 100%;
       margin-bottom: 1rem;
     }
   }
