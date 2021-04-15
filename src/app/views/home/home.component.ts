@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.searchCharactersForm.value.character);
     this.getData();
     this.getForm();
   }
@@ -30,7 +29,6 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.searchCharactersForm.value.character);
     this.filterCharacters(this.searchCharactersForm.value.character)
   }
 
@@ -40,8 +38,7 @@ export class HomeComponent implements OnInit {
 
   onSelectCharactersDisplayed(data: any) {
     this.numberDisplayed = Number(data.target.value);
-    console.log(this.charactersFiltered)
-    this.resetCharactersList2(this.charactersFiltered);
+    this.resetCharactersList(this.charactersFiltered);
     this.showBtn()
   }
 
@@ -60,16 +57,12 @@ export class HomeComponent implements OnInit {
         char.status.toLowerCase().includes(text.toLowerCase()) ||
         char.species.toLowerCase().includes(text.toLowerCase())
     });
-    this.resetCharactersList2(this.charactersFiltered);
+    this.resetCharactersList(this.charactersFiltered);
     this.showBtn();
   }
 
-  resetCharactersList2(characters: Character[]) {
+  resetCharactersList(characters: Character[]) {
     this.charactersOnView = characters.slice(0, this.numberDisplayed);
-  }
-
-  resetCharactersList(show: number) {
-    this.charactersOnView = this.characters.slice(0, show);
   }
 
   getData() {
@@ -77,7 +70,7 @@ export class HomeComponent implements OnInit {
       this.characters = JSON.parse(localStorage.characters)
         .sort((a: Character, b: Character) => a.id > b.id ? 1 : -1);
       this.charactersFiltered = this.characters;
-      this.resetCharactersList2(this.characters);
+      this.resetCharactersList(this.characters);
       this.loadedLocalStorageChar = true;
     }
   }

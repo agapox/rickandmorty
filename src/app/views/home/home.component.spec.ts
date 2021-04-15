@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { ComponentsModule } from 'src/app/components/components.module';
 import { CharactersArrayMock } from 'src/assets/mocks/character.mock';
 
 import { HomeComponent } from './home.component';
@@ -10,7 +14,12 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ HomeComponent ],
+      imports: [
+        ReactiveFormsModule,
+        RouterModule,
+        ComponentsModule
+      ]
     })
     .compileComponents();
   });
@@ -37,12 +46,13 @@ describe('HomeComponent', () => {
   });
 
   it('should toggle btn view', () => {
-    let qtty = 1;
-    component.showBtn(qtty);
-    expect(component.hideButton).toBeFalse();
-    qtty = CharactersArrayMock.length
-    component.showBtn(qtty);
+    component.charactersFiltered = CharactersArrayMock;
+    component.charactersOnView = CharactersArrayMock;
+    component.showBtn();
     expect(component.hideButton).toBeTrue();
+    component.charactersOnView = CharactersArrayMock.slice(0,2);
+    component.showBtn();
+    expect(component.hideButton).toBeFalse();
   });
 
   it('should show more characters into view', () => {
@@ -67,15 +77,20 @@ describe('HomeComponent', () => {
     }
   });
 
-  xit('should select display characters', async() => {
-    spyOn(component, 'onSelectShow');
-    let select =  fixture.debugElement.nativeElement.querySelector('select');
-    select.change();
+  it('should select display characters', async() => {
+    fixture.detectChanges();
+    let select: HTMLSelectElement = fixture.nativeElement.querySelector('select');
+    spyOn(component, 'resetCharactersList')
+    spyOn(component, 'showBtn')
+    select.onchange
+    select.value = select.options[0].value;
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
-      component.resetCharactersList(20)
-      expect(component.charactersOnView.length).toBe(20);
-      //expect(component.showBtn).toHaveBeenCalled();
+      expect(component.resetCharactersList).toHaveBeenCalled();
+      expect(component.showBtn).toHaveBeenCalled();
     });
+    expect(component.numberDisplayed).toEqual(4);
   });
 
 });

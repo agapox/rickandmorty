@@ -1,4 +1,4 @@
-<div class="card" [ngClass]="'character-' + character.id.toString()">
+<div class="card" *ngIf="character" [ngClass]="'character-' + character.id.toString()">
   <div class="card-img-container">
     <img [src]="character.image" class="card-img-top" [alt]="character.name">
     <app-badge [status]="character.status"></app-badge>
