@@ -5,6 +5,7 @@ import { Location, LocationsHttp } from '../../interfaces/location.interface';
 import { CharacterService } from '../../services/character.service';
 import { LocationService } from '../../services/location.service';
 import { EpisodeService } from '../../services/episode.service';
+import { map } from 'rxjs/operators';
 
 interface Count {
   count: number;
@@ -80,9 +81,6 @@ export class ChallengeComponent implements OnInit {
   ngOnInit() {
     this.initTimer = performance.now();
     this.getCharacterPages();
-    this.getLocationPages();
-    this.getEpisodePages();
-    // this.getLocationsOfEpisodeById(1)
   }
 
   getChallengesData(name: string, dataChal: Count) {
@@ -107,10 +105,12 @@ export class ChallengeComponent implements OnInit {
       },
       (err) => console.error(err),
       () => {
-        if (i === pages ) {
+        if (i === pages) {
           this.calcCountAndTime(this.characters, this.charactersData);
           this.saveCharactersLocalStorage(this.characters);
           this.getChallengesData('Characters', this.charactersData);
+          this.getLocationPages();
+          this.getEpisodePages();
         }
       });
     }
