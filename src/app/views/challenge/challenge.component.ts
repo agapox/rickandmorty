@@ -82,6 +82,7 @@ export class ChallengeComponent implements OnInit {
     this.getCharacterPages();
     this.getLocationPages();
     this.getEpisodePages();
+    // this.getLocationsOfEpisodeById(1)
   }
 
   getChallengesData(name: string, dataChal: Count) {
@@ -107,7 +108,7 @@ export class ChallengeComponent implements OnInit {
       (err) => console.error(err),
       () => {
         if (i === pages ) {
-          this.calcCountAndTime(this.charactersData);
+          this.calcCountAndTime(this.characters, this.charactersData);
           this.saveCharactersLocalStorage(this.characters);
           this.getChallengesData('Characters', this.charactersData);
         }
@@ -121,16 +122,19 @@ export class ChallengeComponent implements OnInit {
     }
   }
 
-  calcCountAndTime(data: Count) {
-    data.count = this.countLetters(this.characters, data.letter.toLocaleLowerCase());
+  calcCountAndTime(arr: (Character[] | Location[] | Episode[]), data: Count) {
+    data.count = this.countLetters(arr, data.letter.toLocaleLowerCase());
     data.time = (performance.now() - this.initTimer);
   }
 
   countLetters(arr: (Character[] | Location[] | Episode[]), letter: string) {
-    let count = 0
+    let count = 0;
     arr.forEach((el: (Character | Location | Episode)) => {
-      el.name.toLowerCase().split('').forEach((char:string) => {
-        char === letter.toLocaleLowerCase() && count++;
+      const word = el.name.toLowerCase();
+      word.includes(letter) && el.name.toLowerCase().split('').forEach((char:string) => {
+        if (char === letter.toLocaleLowerCase()) {
+          count++;
+        }
       });
     });
     return count;
@@ -154,7 +158,7 @@ export class ChallengeComponent implements OnInit {
       (err) => console.error(err),
       () => {
         if (i === pages) {
-          this.calcCountAndTime(this.locationsData);
+          this.calcCountAndTime(this.locations, this.locationsData);
           this.saveLocationsLocalStorage(this.locations);
           this.getChallengesData('Locations', this.locationsData);
         }
@@ -186,7 +190,7 @@ export class ChallengeComponent implements OnInit {
       (err) => console.error(err),
       () => {
         if (i === pages) {
-          this.calcCountAndTime(this.episodesData);
+          this.calcCountAndTime(this.episodes, this.episodesData);
           this.fase1Timer = performance.now() - this.initTimer;
           this.saveEpisodesLocalStorage(this.episodes);
           this.getEpisodesCharacterLocationsOrigin(this.episodes);
@@ -204,25 +208,25 @@ export class ChallengeComponent implements OnInit {
   }
 
   getEpisodesCharacterLocationsOrigin(episodes: Episode[]) {
-    let epiLocWo: {
+    let epiLocations: {
       id: number,
       name: string,
       location: string[]
     }[] = []
-    episodes.forEach(({id, name, characters}: Episode, i) => {
+    episodes.forEach(({id, name, characters}: Episode, i: number) => {
       let charLocationWorld: string[] = [];
       characters.forEach((el: string) => {
-        const char = this.characters[Number(el.split('https://rickandmortyapi.com/api/character/')[1])];
-        char?.location && charLocationWorld.push(char.location.name);
+        const charId = Number(el.split('https://rickandmortyapi.com/api/character/')[1])
+        const char = this.characters[charId-1];
         char?.origin && charLocationWorld.push(char.origin.name);
       })
-      epiLocWo.push({
+      epiLocations.push({
         id,
         name,
         location: [...new Set(charLocationWorld)]
       });
-    })
-    this.epiLocation = epiLocWo
+    });
+    this.epiLocation = epiLocations;
     const t1 = performance.now()
     this.fase2Timer = t1 - this.initTimer;
     console.log(t1)
